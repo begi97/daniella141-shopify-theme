@@ -1,0 +1,72 @@
+{% assign chosen_collection = section.settings.featured_collection %}
+
+{% if chosen_collection == blank %}
+  {% assign chosen_collection = collections.all %}
+{% endif %}
+
+<div class="w-full px-8 text-black my-8">
+  <h2 class="text-xl mb-8">
+    {{ section.settings.featured_collection_title }}
+  </h2>
+  <div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      {% for product in chosen_collection.products limit: section.settings.product_limit %}
+        <div class="w-full">
+          <div class="h-80 overflow-hidden">
+            {% if product.featured_image %}
+              <img
+                class="object-cover w-full h-full"
+                src="{{ product.featured_image | img_url: 'medium' }}"
+                alt="{{ product.featured_image.alt }}"
+              >
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover bg-gray-100' }}
+            {% endif %}
+          </div>
+          <div class="py-4">
+            <p>{{ product.title | escape | link_to: product.url }}</p>
+            <div class="flex gap-2 font-medium">
+              {% if product.compare_at_price > product.price %}
+                <p class="line-through text-[var(--color-compare-at-price)]">{{ product.compare_at_price | money }}</p>
+              {% endif %}
+              <p class="text-[var(--color-price)]">{{ product.price | money }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Collection",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Featured Collection"
+    },
+    {
+      "type": "text",
+      "default": "New Arrivals",
+      "label": "Set title for featured collection",
+      "id": "featured_collection_title"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "label": "Number of products to show",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection"
+    }
+  ]
+}
+{% endschema %}

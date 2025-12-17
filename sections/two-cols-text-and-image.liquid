@@ -1,0 +1,157 @@
+<div class="w-full py-10 grid grid-cols-10 gap-10 px-10">
+  <div class="col-span-10 md:col-span-5 order-last md:order-first">
+    <div class="flex flex-col justify-center h-full">
+      {% if section.blocks.size == 0 %}
+        <!-- render default blocks to frontend even if not added -->
+        <h3 class="text-3xl font-medium">Every Item Plants 10 Trees</h3>
+        <p class="text-xl my-4">Join Us in Protecting the World We Play In</p>
+        <p class="text-sm max-w-full">
+          We're on a mission to restore the planet by planting trees and creating Earth-First, sustainably made apparel.
+          For each tentree item sold, we plant trees worldwide that capture carbon, restore ecosystems, protect wildlife
+          habitats, and create jobs in communities that need them most. Our goal is to plant 1 billion trees with you by
+          2030.
+        </p>
+      {% else %}
+        {% for block in section.blocks %}
+          <div {{ block.shopify_attributes }}>
+            {% case block.type %}
+              {% when 'title' %}
+                <h3 class="text-3xl font-medium">{{ block.settings.text }}</h3>
+
+              {% when 'subtitle' %}
+                <p class="text-xl my-4">{{ block.settings.text }}</p>
+
+              {% when 'paragraph' %}
+                <p class="text-sm max-w-full">{{ block.settings.text }}</p>
+            {% endcase %}
+          </div>
+        {% endfor %}
+      {% endif %}
+      <div class="flex gap-5 items-center my-4">
+        <a
+          href="{{ section.settings.first_button_url |  default: '/collections/all' }}"
+          class="bg-[var(--color-forest-green-300)] flex-1 text-center text-[var(--color-text-on-primary)] text-sm p-2 px-4 rounded"
+        >
+          {{- section.settings.first_button_url_text -}}
+        </a>
+        <a
+          href="{{ section.settings.second_button_url |  default: '/collections/all' }}"
+          class="bg-[var(--color-forest-green-300)] flex-1 text-center text-[var(--color-text-on-primary)] text-sm p-2 px-4 rounded"
+        >
+          {{- section.settings.second_button_url_text -}}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-10 md:col-span-5 order-1 md:order-last mx-auto">
+    <div
+      class="max-w-full md:max-w-lg flex justify-center"
+    >
+      {% if section.settings.text_and_image_img %}
+        <img
+          src="{{ section.settings.text_and_image_img |  image_url: width: 700 }}"
+          class="w-full h-full object-cover"
+        >
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'w-full max-w-full h-[300px]' }}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Text and Image Section",
+  "settings": [
+    // {
+    //   "type": "text",
+    //   "label": "Title",
+    //   "default": "Every Item Plants 10 Trees",
+    //   "id": "text_and_image_title"
+    // },
+    // {
+    //   "type": "text",
+    //   "label": "Subtitle",
+    //   "default": "Join Us in Protecting the World We Play In",
+    //   "id": "text_and_image_subtitle"
+    // },
+    // {
+    //   "type": "text",
+    //   "label": "Paragraph",
+    //   "default": "We're on a mission to restore the planet by planting trees and creating Earth-First, sustainably made apparel. For each tentree item sold, we plant trees worldwide that capture carbon, restore ecosystems, protect wildlife habitats, and create jobs in communities that need them most. Our goal is to plant 1 billion trees with you by 2030.",
+    //   "id": "text_and_image_paragraph"
+    // },
+    {
+      "type": "url",
+      "id": "first_button_url",
+      "label": "First Button Url"
+    },
+    {
+      "type": "text",
+      "id": "first_button_url_text",
+      "label": "First Button Text",
+      "default": "Our impact"
+    },
+    {
+      "type": "url",
+      "id": "second_button_url",
+      "label": "Second Button Url"
+    },
+    {
+      "type": "text",
+      "id": "second_button_url_text",
+      "label": "Second Button Text",
+      "default": "About us"
+    },
+    {
+      "type": "image_picker",
+      "label": "Choose an image",
+      "id": "text_and_image_img"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "title",
+      "name": "Title",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Title text",
+          "default": "Every Item Plants 10 Trees"
+        }
+      ]
+    },
+    {
+      "type": "subtitle",
+      "name": "Subtitle",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Subtitle text",
+          "default": "Join Us in Protecting the World We Play In"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Paragraph text",
+          "default": "We're on a mission to restore the planet by planting trees and creating Earth-First, sustainably made apparel. For each tentree item sold, we plant trees worldwide that capture carbon, restore ecosystems, protect wildlife habitats, and create jobs in communities that need them most. Our goal is to plant 1 billion trees with you by 2030."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text and Image",
+      "blocks": [{ "type": "title" }, { "type": "subtitle" }, { "type": "paragraph" }]
+    }
+  ]
+}
+{% endschema %}

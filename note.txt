@@ -1,0 +1,4 @@
+<script>
+          // const productDebug = {{ product | json }};
+          // console.log("Product object:", productDebug);
+        </script>

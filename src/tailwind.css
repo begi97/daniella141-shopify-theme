@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cloud-gray-50: rgb(238, 238, 233);
+  --color-forest-green-300: rgb(81, 101, 89);
+  --color-cloud-gray-test: 238 238 233;
+  --color-price: #953d43;
+  --color-compare-at-price: #666666;
+  --color-text-on-primary: #eeeeea;
+}

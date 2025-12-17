@@ -1,0 +1,53 @@
+<div class="w-full px-10 bg-[var(--color-forest-green-300)] py-10 grid md:grid-cols-2 gap-5">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'text' %}
+        <div class="flex flex-col gap-5">
+          <h3 class="text-[var(--color-text-on-primary)] text-3xl font-medium">Get Rewarded For doing good things</h3>
+          <p class="text-[var(--color-text-on-primary)] text-sm">
+            Join our Rewards Program to earn points that can be used as a cash on future purchases.
+          </p>
+        </div>
+      {% when 'buttons' %}
+        <div>
+          <div class="flex gap-5 my-4 justify-start md:justify-end flex-col md:flex-row">
+            <a
+              href="#"
+              class="text-black uppercase lg:min-w-52 text-sm font-medium text-center bg-[var(--color-text-on-primary)] text-sm p-3 min-w-40 max-w-64 rounded"
+            >
+              Create Account
+            </a>
+            <a
+              href="#"
+              class="text-black uppercase lg:min-w-52 text-sm font-medium text-center bg-[var(--color-text-on-primary)] text-sm p-3 min-w-40 max-w-64 rounded"
+            >
+              Log in to view points
+            </a>
+          </div>
+        </div>
+    {% endcase %}
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": "Login Call Section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text Section"
+    },
+    {
+      "type": "buttons",
+      "name": "Buttons Section"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text and Buttons",
+      "blocks": [{ "type": "text" }, { "type": "buttons" }]
+    }
+  ]
+}
+{% endschema %}

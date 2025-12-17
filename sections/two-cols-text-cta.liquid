@@ -1,0 +1,44 @@
+<div class="w-full px-8 py-10 grid md:grid-cols-2 gap-5">
+  <div class="bg-[var(--color-forest-green-300)] text-[var(--color-text-on-primary)] md:col-span-1 p-5 flex flex-col gap-4">
+    <h3 class="text-2xl font-medium">{{ section.settings.two_col_first_id }}</h3>
+    <p class="text-sm">Register trees and get your own virtual forest island that will change as you plant.</p>
+    <a href="{{ section.settings.two_col_first_url_id }}" class="text-sm underline ">Learn more*</a>
+  </div>
+  <div class="bg-[var(--color-forest-green-300)] text-[var(--color-text-on-primary)] md:col-span-1 p-5 flex flex-col gap-4">
+    <h3 class="text-2xl font-medium">{{ section.settings.two_col_second_id }}</h3>
+    <p class="text-sm">Plant trees monthly to offset your lifestyle or just to help your planet cool off.</p>
+    <a href="{{ section.settings.two_col_second_url_id }}" class="text-sm underline ">Subscribe Now*</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Two Columns Text and Cta",
+  "settings": [
+    {
+      "type": "text",
+      "id": "two_col_first_id",
+      "default": "Get your own interactive virtual forest",
+      "label": "Set First container's title"
+    },
+    {
+      "type": "text",
+      "id": "two_col_second_id",
+      "default": "Tree Planting on Auto Pilot",
+      "label": "Set second container's title"
+    },
+    {
+      "type": "url",
+      "id": "two_col_first_url_id",
+      "default": "/",
+      "label": "Set First url"
+    },
+    {
+      "type": "url",
+      "id": "two_col_second_url_id",
+      "default": "/",
+      "label": "Set second url"
+    }
+  ]
+}
+{% endschema %}

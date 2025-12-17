@@ -1,0 +1,93 @@
+{% assign hero_image = section.settings.image | img_url: 'master' %}
+
+<section
+  style="
+    --hero-title-color: {{ section.settings.title_color }};
+    --hero-subtitle-color: {{ section.settings.subtitle_color }};
+    --hero-overlay: {{ section.settings.overlay_color }};
+    background-image: url('{{ hero_image }}');
+  "
+  class="relative flex items-center justify-center h-140 bg-cover bg-center bg-no-repeat px-20"
+>
+  <div class="absolute inset-0 bg-[rgba(0,0,0,0.5)]"></div>
+  <!-- Content -->
+  <div class="relative z-10 text-center pl-6">
+    <h1 class="text-4xl font-bold text-white">
+      {% if section.settings.title != blank %}
+        {{ section.settings.title }}
+      {% endif %}
+    </h1>
+    <p class="mt-4 text-xl text-white">
+      {% if section.settings.subtitle != blank %}
+        {{ section.settings.subtitle }}
+      {% endif %}
+    </p>
+    <a
+      href="{{ section.settings.button_link }}"
+      class="mt-6 inline-block px-6 py-3 bg-[#f4f4f2] text-black rounded-lg text-lg uppercase"
+    >
+      {% if section.settings.button_text != blank %}
+        {{ section.settings.button_text }}
+      {% endif %}
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Season’s Guide to Sustainable Gifting"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Impress your list with gifts that make an impact by planting trees and becoming instant closet favorites. Plus, enjoy extended returns this season and free holiday shipping until Dec 15th."
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "rgba(0,0,0,0.5)"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner"
+    }
+  ]
+}
+{% endschema %}

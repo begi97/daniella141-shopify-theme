@@ -1,0 +1,52 @@
+<div class="w-full mt-8 mb-16 px-4">
+  <h1 class="text-center text-2xl font-bold">Collections</h1>
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    {% for collection in collections %}
+      <a href="{{ collection.url }}" class="w-full">
+        <div class="w-full">
+          {% if collection.featured_image %}
+            <img src="{{ collection.featured_image |  img_url: 'master' }}" alt="{{ collection.title }}">
+          {% else %}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {% endif %}
+        </div>
+        <div class="w-full text-center">
+          <p>{{ collection.title }}</p>
+
+          {% if collection.description %}
+            <p>{{ collection.description | strip_html | truncatewords: 15 }}</p>
+          {% endif %}
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:general.collections_grid",
+  "settings": [
+    {
+      "type": "select",
+      "id": "grid_item_width",
+      "label": "t:labels.grid_item_width",
+      "options": [
+        { "value": "collections--compact", "label": "t:options.size.small" },
+        { "value": "collections--full", "label": "t:options.size.large" }
+      ],
+      "default": "collections--full"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "t:labels.grid_gap",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 10
+    }
+  ],
+  "presets": [{ "name": "t:general.collections_grid" }]
+}
+{% endschema %}

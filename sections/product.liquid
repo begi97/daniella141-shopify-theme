@@ -1,0 +1,70 @@
+<div class="w-full px-8 my-8">
+  <div class="grid md:grid-cols-2 gap-5">
+    <div class="grid md:grid-cols-2 gap-2">
+      {% for image in product.images %}
+        {% render 'image', class: 'product-image', image: image %}
+      {% endfor %}
+    </div>
+    <div class="w-full">
+      <div class="product-info flex flex-col gap-4">
+        <h1 class="text-2xl font-bold">{{ product.title | escape }}</h1>
+        <div class="flex gap-4 font-medium">
+          {% if product.compare_at_price > product.price %}
+            <p class="line-through text-[var(--color-compare-at-price)]">{{ product.compare_at_price | money }}</p>
+          {% endif %}
+          <p class="text-[var(--color-price)]">{{ product.price | money }}</p>
+        </div>
+      </div>
+      <div class="product-form flex flex-col gap-4">
+        <form id="product-form" action="/cart/add" method="post">
+          {% assign current_variant = product.selected_or_first_available_variant %}
+
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <select
+            name="id"
+            class="
+              block w-full  border border-gray-300 bg-white px-4 py-2 text-base text-gray-900
+              focus:border-black focus:outline-none focus:ring-1 focus:ring-black
+              disabled:cursor-not-allowed disabled:bg-gray-100 my-4
+            "
+          >
+            {% for variant in product.variants %}
+              <option
+                value="{{ variant.id }}"
+                {% if variant == current_variant %}
+                  selected
+                {% endif %}
+              >
+                {{ variant.title }} – {{ variant.price | money }}
+              </option>
+            {% endfor %}
+          </select>
+
+          <div class="flex flex-col gap-5">
+            <input
+              type="submit"
+              class="block bg-forest-green-300 text-white w-full p-3 uppercase font-medium cursor-pointer"
+              value="Add to cart"
+            >
+            {% comment %} {{ form | payment_button }} {% endcomment %}
+          </div>
+        </form>
+      </div>
+      <div class="my-4">
+        <p>
+          {{ product.description }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:general.product",
+  "settings": [],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

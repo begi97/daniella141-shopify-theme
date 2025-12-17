@@ -1,0 +1,136 @@
+<footer class="px-8 mb-4 w-full">
+  <div class="grid lg:grid-cols-4 gap-6 w-full">
+    <div class="lg:col-span-1 w-full">
+      <div class="w-full">
+        <h3 class="pb-2 mb-4 font-medium border-b border-[#ddd] w-full">Certifications</h3>
+        <div class="flex flex-col gap-5">
+          <img
+            src="https://cdn.shopify.com/s/files/1/0987/0285/2379/files/B-Corp-certification.svg?v=1765460105"
+            alt=""
+            class="max-w-52 md:max-w-40"
+          >
+          <img
+            src="https://cdn.shopify.com/s/files/1/0987/0285/2379/files/science_bases_targets_logo_converted.webp?v=1765460105"
+            alt=""
+            class="max-w-52 md:max-w-40"
+          >
+          <img
+            src="https://cdn.shopify.com/s/files/1/0987/0285/2379/files/RC_Landscape_Gradient_Colour_converted.avif?v=1765460105"
+            alt=""
+            class="max-w-52 md:max-w-40"
+          >
+          <img
+            src="https://cdn.shopify.com/s/files/1/0987/0285/2379/files/TheClimateLabel-Black-Horiz-Outline.svg?v=1765460106"
+            alt=""
+            class="max-w-52 md:max-w-40"
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-1 w-full">
+      <div class="w-full">
+        <h3 class="pb-2 mb-2 font-medium border-b border-[#ddd] w-full">Support</h3>
+        <div class="flex flex-col gap-1">
+          <a href="#">contact</a>
+          <a href="#">help center</a>
+          <a href="#">shipping</a>
+          <a href="#">returns & exchanges</a>
+          <a href="#">klarna FAQs</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-1 w-full">
+      <div class=" w-full">
+        <h3 class="pb-2 mb-2 font-medium border-b border-[#ddd] w-full">Company</h3>
+        <div class="flex flex-col gap-1">
+          <a href="#">store locator </a>
+          <a href="#">fit guide </a>
+          <a href="#">trade in program </a>
+          <a href="#">pro program </a>
+          <a href="#">become a retailer </a>
+          <a href="#">careers </a>
+          <a href="#">corporate product orders </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-1 w-full">
+      <div class=" w-full">
+        <h3 class="pb-2 mb-2 font-medium border-b border-[#ddd] w-full">Connected</h3>
+        <div class="flex flex-col gap-2">
+          <h4 class="text-sm font-bold">Join tentree's Email & Text lists to get 15% off!</h4>
+          <p class="text-sm">Sign up for insider info on sales, new arrivals, and more.</p>
+          {% form 'customer', id: 'footer-signup' %}
+            <input
+              type="email"
+              name="contact[email]"
+              placeholder="Enter your email"
+              class="border-[#ddd] border p-2 w-full"
+              required
+            >
+            <p
+              class="text-[10px] text-[#bab7b7] py-2"
+            >
+              By submitting this form, you agree to receive recurring automated promotional and personalized marketing
+              text messages (e.g. cart reminders) from Tentree at the cell number used when signing up. Consent is not a
+              condition of any purchase. Reply HELP for help. You can withdraw your consent at any time by texting STOP.
+              Msg frequency varies. Std Msg & data rates may apply. View Terms & Privacy. Contact Tentree at 230 - 1275
+              Venables St, Vancouver + support@tentree.com.
+            </p>
+            <button
+              type="submit"
+              class="mt-2 px-8 py-2 bg-[var(--color-primary-button-color)] text-white rounded cursor-pointer rounded-full"
+            >
+              Subscribe
+            </button>
+
+            {% if form.posted_successfully? %}
+              <p class="text-green-600 mt-2">Thanks for subscribing!</p>
+            {% endif %}
+
+            {% if form.errors %}
+              <p class="text-red-600 mt-2">{{ form.errors | default_errors }}</p>
+            {% endif %}
+          {% endform %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="w-full mt-8 mb-4 border-b-1 border-[#ddd] pb-4 text-center flex gap-2 justify-center">
+    {% if section.settings.show_payment_icons %}
+      {% for type in shop.enabled_payment_types %}
+        {{ type | payment_type_svg_tag }}
+      {% endfor %}
+    {% endif %}
+  </div>
+  <div class="w-full pb-4 border-[#ddd] border-b-1">
+    <p class="text-sm text-center">
+      We acknowledge that our company is based on the traditional, ancestral and unceded territories of the Coast Salish
+      Nations
+    </p>
+  </div>
+  <div class="w-full mt-4">
+    <p class="text-center">© 2025. All Rights Reserved.</p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "t:general.footer",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "t:labels.show_payment_icons",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

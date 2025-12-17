@@ -1,0 +1,46 @@
+{% comment %}
+  This section is used in the collection template to render collection page
+  listing all products within a collection.
+
+  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
+{% endcomment %}
+<div class="w-full px-4 my-8">
+  <h1 class="text-center text-2xl font-bold mb-8">{{ collection.title }}</h1>
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    {% for product in collection.products limit: 4 %}
+      <a href="{{ product.url }}" class="w-full block">
+        <div class="w-full">
+          {% comment %} bg-[#e7e7e7] {% endcomment %}
+          {% if product.featured_image %}
+            <img
+              src="{{ product.featured_image |  img_url: 'master' }}"
+              class="object-cover h-100 w-full"
+              alt="{{ product.title }}"
+            >
+          {% else %}
+            {{ ' product-2' | placeholder_svg_tag: 'w-full h-full object-cover bg-gray-100' }}
+          {% endif %}
+        </div>
+        <div class="py-4">
+          <p>{{ product.title | escape }}</p>
+          <div class="flex gap-2 font-medium">
+            {% if product.compare_at_price > product.price %}
+              <p class="line-through text-[var(--color-compare-at-price)]">{{ product.compare_at_price | money }}</p>
+            {% endif %}
+            <p class="text-[var(--color-price)]">{{ product.price | money }}</p>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+  {% paginate collection.products by 4 %}
+    {{ paginate | default_pagination }}
+  {% endpaginate %}
+</div>
+
+{% schema %}
+{
+  "name": "t:general.collection",
+  "settings": []
+}
+{% endschema %}

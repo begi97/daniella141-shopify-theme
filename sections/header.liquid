@@ -1,0 +1,57 @@
+{% assign main_menu = section.settings.menu %}
+
+<header class="w-full bg-cloud-gray-50 text-black">
+  <div class="announcement-bar bg-forest-green-300 h-10 flex items-center justify-center text-white text-xs uppercase">
+    {{ section.settings.announcement_bar_text }}
+  </div>
+  <div class="h-20  px-8 py-2 flex items-center justify-between">
+    <div class="flex items-center gap-5">
+      <h1 class="text-3xl mr-10">{{ shop.name | link_to: routes.root_url }}</h1>
+      <nav class="flex gap-5">
+        {% if main_menu == blank %}
+          <small class="text-red-600"> Please provide menu link from theme editor </small>
+        {% endif %}
+        {% for link in main_menu.links %}
+          <a href="{{ link.url }}" class="text-sm uppercase">
+            {{ link.title }}
+          </a>
+        {% endfor %}
+      </nav>
+    </div>
+    <div class="flex gap-2 items-center justify-center">
+      {% if shop.customer_accounts_enabled %}
+        <a href="{{ routes.account_url }}">
+          {% render 'account-icon' %}
+        </a>
+      {% endif %}
+      <button href="{{ routes.cart_url }}" id="cart-icon" class="relative cursor-pointer">
+        {% if cart.item_count > 0 %}
+          <sup class="bg-black text-white rounded-full w-[15px] h-[15px] absolute right-0 leading-[15px] text-center font-xs">
+            {{- cart.item_count -}}
+          </sup>
+        {% endif %}
+        {% render 'cart-icon' %}
+      </button>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "t:general.header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "announcement_bar_text",
+      "label": "Announcement bar text",
+      "default": "Free Shipping on All orders"
+    }
+  ]
+}
+{% endschema %}

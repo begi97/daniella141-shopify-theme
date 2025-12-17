@@ -1,0 +1,89 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_banner": {
+      "type": "hero-banner",
+      "settings": {
+        "image": "shopify://shop_images/trash_talk_section_plant_big_2.webp",
+        "title": "Season’s Guide to Sustainable Gifting",
+        "subtitle": "Impress your list with gifts that make an impact by planting trees and becoming instant closet favorites. Plus, enjoy extended returns this season and free holiday shipping until Dec 15th.",
+        "title_color": "#ffffff",
+        "subtitle_color": "#e5e5e5",
+        "overlay_color": "#00000080",
+        "button_text": "Shop now",
+        "button_link": ""
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "featured_collection": "",
+        "featured_collection_title": "New Arrivals",
+        "product_limit": 4
+      }
+    },
+    "counter_banner": {
+      "type": "counter-banner",
+      "settings": {}
+    },
+    "two_cols_text_and_image": {
+      "type": "two-cols-text-and-image",
+      "settings": {
+        "first_button_url": "",
+        "first_button_url_text": "Our impact",
+        "second_button_url": "",
+        "second_button_url_text": "About us"
+      }
+    },
+    "login_call_section_Bfe9QH": {
+      "type": "login-call-section",
+      "blocks": {
+        "text_JVKrCJ": {
+          "type": "text",
+          "settings": {}
+        },
+        "buttons_YNUyJa": {
+          "type": "buttons",
+          "settings": {}
+        }
+      },
+      "block_order": ["text_JVKrCJ", "buttons_YNUyJa"],
+      "name": "Text and Buttons",
+      "settings": {}
+    },
+    "featured_collection_2": {
+      "type": "featured-collection",
+      "settings": {
+        "featured_collection": "",
+        "featured_collection_title": "New Arrivals",
+        "product_limit": 4
+      }
+    },
+    "two_cols_text_cta": {
+      "type": "two-cols-text-cta",
+      "settings": {
+        "two_col_first_id": "Get your own interactive virtual forest",
+        "two_col_second_id": "Tree Planting on Auto Pilot",
+        "two_col_first_url_id": "shopify://products/the-collection-snowboard-hydrogen",
+        "two_col_second_url_id": "shopify://blogs/news"
+      }
+    }
+  },
+  "order": [
+    "hero_banner",
+    "featured_collection",
+    "counter_banner",
+    "two_cols_text_and_image",
+    "login_call_section_Bfe9QH",
+    "featured_collection_2",
+    "two_cols_text_cta"
+  ]
+}
