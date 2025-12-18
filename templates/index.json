@@ -25,7 +25,7 @@
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "featured_collection": "",
+        "featured_collection": "automated-collection",
         "featured_collection_title": "New Arrivals",
         "product_limit": 4
       }
@@ -62,7 +62,7 @@
     "featured_collection_2": {
       "type": "featured-collection",
       "settings": {
-        "featured_collection": "",
+        "featured_collection": "hydrogen",
         "featured_collection_title": "New Arrivals",
         "product_limit": 4
       }
