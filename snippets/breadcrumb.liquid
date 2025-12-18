@@ -1,0 +1,26 @@
+<nav aria-label="Breadcrumb" class="text-sm my-4 block">
+  <ol class="flex flex-wrap gap-2">
+    <li>
+      <a href="{{ routes.root_url }}" class="text-black hover:underline">Home</a>
+    </li>
+
+    {% if collection %}
+      <li>|</li>
+      <li>
+        <a href="{{ collection.url }}" class="text-black hover:underline">
+          {{ collection.title }}
+        </a>
+      </li>
+    {% endif %}
+
+    {% if product %}
+      <li>|</li>
+      <li class="font-semibold">{{ product.title }}</li>
+    {% endif %}
+
+    {% if page %}
+      <li>|</li>
+      <li class="font-semibold">{{ page.title }}</li>
+    {% endif %}
+  </ol>
+</nav>

@@ -1,8 +1,21 @@
 <div class="w-full px-8 my-8">
+  <div>
+    {% render 'breadcrumb' %}
+  </div>
   <div class="grid md:grid-cols-2 gap-5">
     <div class="grid md:grid-cols-2 gap-2">
       {% for image in product.images %}
-        {% render 'image', class: 'product-image', image: image %}
+        <div class="aspect-[3/4] w-full overflow-hidden bg-gray-100 relative">
+          {% if image %}
+            <img
+              src="{{ image | img_url: 'master' }}"
+              class="object-cover w-full h-full"
+              alt="{{ product.title }}"
+            >
+          {% else %}
+            {{ 'product-2' | placeholder_svg_tag: 'w-full h-full object-cover bg-gray-100' }}
+          {% endif %}
+        </div>
       {% endfor %}
     </div>
     <div class="w-full">
@@ -15,6 +28,46 @@
           <p class="text-[var(--color-price)]">{{ product.price | money }}</p>
         </div>
       </div>
+
+      {% comment %} the collection variants START {% endcomment %}
+      {% if product.collections.size > 0 %}
+        {% assign current_collection = product.collections.first %}
+        <div class="my-6">
+          <h3 class="mb-2 font-semibold text-lg">Colors</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+            {% for col_product in current_collection.products %}
+              {% assign is_current = false %}
+              {% if col_product.id == product.id %}
+                {% assign is_current = true %}
+              {% endif %}
+
+              <a href="{{ col_product.url }}" class="block">
+                <div
+                  class="
+                    aspect-square border-2 p-2 flex items-center justify-center
+                    {% if is_current %}border-black{% else %}border-[#ddd]{% endif %}
+                  "
+                >
+                  {% if col_product.featured_image %}
+                    <img
+                      src="{{ col_product.featured_image | img_url: '200x200' }}"
+                      alt="{{ col_product.title }}"
+                      class="object-cover w-full h-full"
+                    >
+                  {% else %}
+                    <div class="bg-gray-200 w-full h-full flex items-center justify-center text-gray-400 text-xs">
+                      No image
+                    </div>
+                  {% endif %}
+                </div>
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      {% comment %} the collection variants END {% endcomment %}
+
       <div class="product-form flex flex-col gap-4">
         <form id="product-form" action="/cart/add" method="post">
           {% assign current_variant = product.selected_or_first_available_variant %}
@@ -50,14 +103,68 @@
           </div>
         </form>
       </div>
-      <div class="my-4">
-        <p>
-          {{ product.description }}
-        </p>
+      <div class="flex gap-2 py-4 text-center justify-center">
+        {% for type in shop.enabled_payment_types %}
+          {{ type | payment_type_svg_tag }}
+        {% endfor %}
       </div>
+      {% if product.description %}
+        <div class="my-4 border-b pb-4">
+          <p
+            id="product_description_handler"
+            class="text-xl flex justify-between cursor-pointer items-center"
+          >
+            <span>Details</span>
+            <img
+              id="product_desc_icon"
+              src="{{ 'minus.svg' | asset_url }}"
+              alt="Toggle description"
+              class="w-4 h-4 transition-transform duration-300"
+              style="width: 24px; height:24px;"
+            >
+          </p>
+
+          <div
+            id="product_description_content"
+            class="block bg-cloud-gray-50 mt-4"
+          >
+            <div class="p-4">
+              {{ product.description }}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      {% comment %}
+        <div class="my-4">
+          <p
+            id="product_description_handler"
+            class="text-xl flex justify-between cursor-pointer items-center"
+          >
+            <span>Shipping & Returns</span>
+            <img
+              id="product_desc_icon"
+              src="{{ 'plus.svg' | asset_url }}"
+              alt="Toggle description"
+              class="w-4 h-4 transition-transform duration-300"
+              style="width: 24px; height:24px;"
+            >
+          </p>
+
+          <div
+            id="product_description_content"
+            class="hidden bg-cloud-gray-50 mt-4"
+          >
+            <div class="p-4">
+              {{ shop.shipping_policy.content }}
+            </div>
+          </div>
+        </div>
+      {% endcomment %}
     </div>
   </div>
 </div>
+
+{{ 'product-page.js' | asset_url | script_tag }}
 
 {% schema %}
 {

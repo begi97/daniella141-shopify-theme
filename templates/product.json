@@ -12,9 +12,16 @@
     "main": {
       "type": "product",
       "settings": {}
+    },
+    "featured_collection_P9NFpU": {
+      "type": "featured-collection",
+      "name": "Featured Collection",
+      "settings": {
+        "featured_collection": "hydrogen",
+        "featured_collection_title": "People also like this",
+        "product_limit": 4
+      }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main", "featured_collection_P9NFpU"]
 }
