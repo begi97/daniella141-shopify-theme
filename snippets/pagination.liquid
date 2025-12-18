@@ -1,0 +1,41 @@
+<div class="flex justify-center gap-2 mt-10 text-sm">
+  {%- if paginate.previous -%}
+    <a
+      href="{{ paginate.previous.url }}"
+      class="px-3 h-[20px] flex items-center justify-center border border-[var(--color-forest-green-300)] hover:bg-[var(--color-forest-green-300)] hover:text-white transition"
+    >
+      Prev
+    </a>
+  {%- endif -%}
+
+  {%- for part in paginate.parts -%}
+    {%- if part.is_link -%}
+      <a
+        href="{{ part.url }}"
+        class="w-[20px] h-[20px] flex items-center justify-center border border-[var(--color-forest-green-300)] hover:bg-[var(--color-forest-green-300)] hover:text-white transition"
+      >
+        {{ part.title }}
+      </a>
+    {%- else -%}
+      <span
+        class="
+          w-[20px] h-[20px] flex items-center justify-center border border-[var(--color-forest-green-300)]
+          {% if part.title == paginate.current_page %}
+            bg-[var(--color-forest-green-300)] text-white
+          {% endif %}
+        "
+      >
+        {{ part.title }}
+      </span>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if paginate.next -%}
+    <a
+      href="{{ paginate.next.url }}"
+      class="px-3 h-[20px] flex items-center justify-center border border-[var(--color-forest-green-300)] hover:bg-[var(--color-forest-green-300)] hover:text-white transition"
+    >
+      Next
+    </a>
+  {%- endif -%}
+</div>

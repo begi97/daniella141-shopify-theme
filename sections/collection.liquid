@@ -1,40 +1,92 @@
-{% comment %}
-  This section is used in the collection template to render collection page
-  listing all products within a collection.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
-{% endcomment %}
 <div class="w-full px-4 my-8">
-  <h1 class="text-center text-2xl font-bold mb-8">{{ collection.title }}</h1>
-  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-    {% for product in collection.products limit: 4 %}
-      <a href="{{ product.url }}" class="w-full block">
-        <div class="w-full">
-          {% comment %} bg-[#e7e7e7] {% endcomment %}
-          {% if product.featured_image %}
-            <img
-              src="{{ product.featured_image |  img_url: 'master' }}"
-              class="object-cover h-100 w-full"
-              alt="{{ product.title }}"
-            >
-          {% else %}
-            {{ ' product-2' | placeholder_svg_tag: 'w-full h-full object-cover bg-gray-100' }}
-          {% endif %}
-        </div>
-        <div class="py-4">
-          <p>{{ product.title | escape }}</p>
-          <div class="flex gap-2 font-medium">
-            {% if product.compare_at_price > product.price %}
-              <p class="line-through text-[var(--color-compare-at-price)]">{{ product.compare_at_price | money }}</p>
+  <h1 class="text-center text-2xl font-bold mb-8">
+    {{ collection.title }}
+  </h1>
+
+  <div class="w-full">
+    <div class="flex justify-end mb-6 gap-5 items-center">
+      <div class="font-medium">Sort By:</div>
+      <form method="get">
+        <select
+          name="sort_by"
+          onchange="this.form.submit()"
+          class="border border-black px-3 py-2 text-sm"
+        >
+          <option
+            value="best-selling"
+            {% if collection.sort_by == 'best-selling' %}
+              selected
             {% endif %}
-            <p class="text-[var(--color-price)]">{{ product.price | money }}</p>
-          </div>
-        </div>
-      </a>
-    {% endfor %}
+          >
+            Best selling
+          </option>
+
+          <option
+            value="price-ascending"
+            {% if collection.sort_by == 'price-ascending' %}
+              selected
+            {% endif %}
+          >
+            Price: Low to High
+          </option>
+
+          <option
+            value="price-descending"
+            {% if collection.sort_by == 'price-descending' %}
+              selected
+            {% endif %}
+          >
+            Price: High to Low
+          </option>
+        </select>
+      </form>
+      <p class="text-[var(--color-compare-at-price)]">{{ collection.products_count }} products</p>
+    </div>
   </div>
-  {% paginate collection.products by 4 %}
-    {{ paginate | default_pagination }}
+
+  {% paginate collection.products by 16 %}
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {% for product in collection.products %}
+        <a href="{{ product.url }}" class="w-full block">
+          <div class="aspect-[3/4] w-full overflow-hidden bg-gray-100 relative">
+            {% if product.featured_image %}
+              <img
+                src="{{ product.featured_image | img_url: 'master' }}"
+                class="object-cover w-full h-full"
+                alt="{{ product.title }}"
+              >
+            {% else %}
+              {{ 'product-2' | placeholder_svg_tag: 'w-full h-full object-cover bg-gray-100' }}
+            {% endif %}
+            {% if product.available == false %}
+              <span
+                class="absolute bottom-2 left-2 bg-black text-white text-xs px-2 py-1 uppercase tracking-wide"
+              >
+                Sold out
+              </span>
+            {% endif %}
+          </div>
+
+          <div class="py-4">
+            <p>{{ product.title | escape }}</p>
+            <div class="flex gap-2 font-medium">
+              {% if product.compare_at_price > product.price %}
+                <p class="line-through text-[var(--color-compare-at-price)]">
+                  {{ product.compare_at_price | money }}
+                </p>
+              {% endif %}
+              <p class="text-[var(--color-price)]">
+                {{ product.price | money }}
+              </p>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+
+    <div class="mt-10">
+      {% render 'pagination', paginate: paginate %}
+    </div>
   {% endpaginate %}
 </div>
 

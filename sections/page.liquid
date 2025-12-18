@@ -1,13 +1,9 @@
-{% comment %}
-  This section is used in the page template to render store pages like About us
-  or Contact us.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/page
-{% endcomment %}
-
-<h1>{{ page.title }}</h1>
-
-{{ page.content }}
+<div class="w-full px-8 text-center">
+  <h1 class="pt-8 font-bold text-xl uppercase">{{ page.title }}</h1>
+  <div class="py-4 text-left">
+    {{ page.content }}
+  </div>
+</div>
 
 {% schema %}
 {

@@ -1,37 +1,110 @@
-{% comment %}
-  This section is used in the cart template to render /cart page with an
-  overview of the items in customer's cart.
+<section class="max-w-6xl mx-auto px-4 py-12">
+  <h1 class="text-2xl font-bold mb-8">Your cart</h1>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
-{% endcomment %}
+  {% if cart.item_count == 0 %}
+    <p>Your cart is currently empty.</p>
+    <a href="/collections/all" class="inline-block mt-6 underline"> Continue shopping </a>
 
-<h1>{{ 'cart.title' | t }}</h1>
+  {% else %}
+    <form action="/cart" method="post">
+      <!-- Cart items -->
+      <div class="space-y-6">
+        {% for item in cart.items %}
+          <div class="flex gap-6 border-b pb-6">
+            <!-- Image -->
+            <a href="{{ item.url }}" class="w-24 h-32 block bg-gray-100">
+              {% if item.image %}
+                <img
+                  src="{{ item.image | img_url: 'medium' }}"
+                  class="w-full h-full object-cover"
+                  alt="{{ item.product.title }}"
+                >
+              {% endif %}
+            </a>
 
-<form action="{{ routes.cart_url }}" method="post">
-  <table>
-    {% for item in cart.items %}
-      <tr>
-        <td>
-          {% render 'image', image: item.image, url: item.url %}
-        </td>
-        <td>
-          <p>{{ item.product.title }}</p>
-          {{ 'cart.remove' | t | link_to: item.url_to_remove }}
-        </td>
-        <td>
-          <input type="text" name="updates[]" value="{{ item.quantity }}">
-          <input type="submit" value="{{ 'cart.update' | t }}">
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
+            <!-- Info -->
+            <div class="flex-1">
+              <a href="{{ item.url }}" class="font-medium block">
+                {{ item.product.title }}
+              </a>
 
-  <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
-</form>
+              {% if item.variant.title != 'Default Title' %}
+                <p class="text-sm text-gray-500">
+                  {{ item.variant.title }}
+                </p>
+              {% endif %}
 
-{% schema %}
-{
-  "name": "t:general.cart",
-  "settings": []
-}
-{% endschema %}
+              <p class="mt-2 text-sm">
+                {{ item.price | money }}
+              </p>
+
+              <!-- Remove -->
+              <a
+                href="{{ item.url_to_remove }}"
+                class="text-sm underline mt-2 inline-block"
+              >
+                Remove
+              </a>
+            </div>
+
+            <!-- Quantity -->
+            <div class="w-20">
+              <input
+                type="number"
+                name="updates[]"
+                value="{{ item.quantity }}"
+                min="0"
+                class="w-full border px-2 py-1"
+              >
+            </div>
+
+            <!-- Line total -->
+            <div class="w-24 text-right font-medium">
+              {{ item.line_price | money }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Summary -->
+      <div class="mt-10 max-w-sm ml-auto">
+        <div class="flex justify-between mb-2">
+          <span>Subtotal</span>
+          <span>{{ cart.total_price | money }}</span>
+        </div>
+
+        {% if cart.cart_level_discount_applications.size > 0 %}
+          <div class="space-y-1 text-sm text-green-700">
+            {% for discount in cart.cart_level_discount_applications %}
+              <div class="flex justify-between">
+                <span>{{ discount.title }}</span>
+                <span>-{{ discount.total_allocated_amount | money }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <p class="text-sm text-gray-500 mt-2">Shipping and taxes calculated at checkout.</p>
+
+        <!-- Actions -->
+        <div class="mt-6 space-y-3">
+          <button
+            type="submit"
+            name="update"
+            class="w-full border border-black py-3 cursor-pointer"
+          >
+            Update cart
+          </button>
+
+          <button
+            type="submit"
+            name="checkout"
+            class="w-full bg-black text-white py-3 cursor-pointer"
+          >
+            Checkout
+          </button>
+        </div>
+      </div>
+    </form>
+  {% endif %}
+</section>
